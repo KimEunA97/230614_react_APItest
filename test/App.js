@@ -5,6 +5,8 @@ import PushNotifi from "./src/push/PushNotifi";
 import TimePicker from "./src/TimePicker";
 
 export default function App() {
+
+
   return (
     <View
       style={{
@@ -13,8 +15,7 @@ export default function App() {
         justifyContent: "space-around",
       }}
     >
-      {/* <PushNotifi/> */}
-      <TimePicker/>
+      <PushNotifi/>
     </View>
   );
 }

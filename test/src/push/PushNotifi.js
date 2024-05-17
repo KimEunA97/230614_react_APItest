@@ -2,10 +2,10 @@ import { useState, useEffect, useRef } from "react";
 import { Text, View, Button, Platform } from "react-native";
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
+import TimePicker from "../TimePicker";
 
 /*
  * # 함수 수행 작업 요약
- *
  * 알림 채널 설정
  * 물리적 기기 확인
  * 푸시 알림 권한 요청 및 상태 확인
@@ -23,11 +23,16 @@ Notifications.setNotificationHandler({
 });
 
 export default function PushNotifi() {
+  const [selectedTime, setSelectedTime] = useState(new Date()); //현재 시간
   const [expoPushToken, setExpoPushToken] = useState("");
   const [notification, setNotification] = useState(false);
-
   const notificationListener = useRef();
   const responseListener = useRef();
+
+  const handle = (time) => {
+    setSelectedTime(time);
+    schedulePushNotification(time);
+  };
 
   useEffect(() => {
     // 푸시 알림 등록 후 토큰 전달
@@ -63,38 +68,23 @@ export default function PushNotifi() {
         justifyContent: "space-around",
       }}
     >
-      <Text>Your expo push token: {expoPushToken}</Text>
-      <View style={{ alignItems: "center", justifyContent: "center" }}>
-        <Text>
-          Title: {notification && notification.request.content.title}{" "}
-        </Text>
-        <Text>Body: {notification && notification.request.content.body}</Text>
-        <Text>
-          Data:{" "}
-          {notification && JSON.stringify(notification.request.content.data)}
-        </Text>
-      </View>
-      <Button
-        title="Press to schedule a notification"
-        onPress={async () => {
-          await schedulePushNotification();
-        }}
-      />
+      {/* <Text>{selectedTime}</Text> */}
+      <TimePicker onTimeSelected={handle} />
     </View>
   );
 
-  async function schedulePushNotification() {
+  async function schedulePushNotification(time) {
     await Notifications.scheduleNotificationAsync({
       content: {
         title: "You've got mail! 📬",
         body: "Here is the notification body",
         data: { data: "goes here" },
       },
-      trigger: { seconds: 2 },
+      trigger: { seconds: Math.floor(time - new Date().getTime()) },
     });
   }
 
-  // 푸시 알림 등록 함수
+  // 푸시 알림 권한 등록 함수
   async function registerForPushNotificationsAsync() {
     let token;
 

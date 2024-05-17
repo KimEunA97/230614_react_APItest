@@ -35,16 +35,8 @@ export default function TimePicker({ onTimeSelected }) {
           display="spinner"
         />
       )}
-      {timeSetToggle ? (
-        <Text style={styles.timeTextStyle}>
-          {" "}
-          설정시간 : {time.toLocaleTimeString("ko-KR")}
-        </Text>
-      ) : (
-        <Text style={styles.timeTextStyle}>
-          {" "}
-          현재시간 : {time.toLocaleTimeString("ko-KR")}
-        </Text>
+      {timeSetToggle && (
+        <Text style={styles.timeTextStyle}> 설정시간 : {time.toLocaleTimeString("ko-KR")}</Text>
       )}
     </View>
   );
