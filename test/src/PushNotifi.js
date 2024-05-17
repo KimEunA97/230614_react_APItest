@@ -6,27 +6,44 @@ import * as Notifications from 'expo-notifications';
 import { schedulePushNotification } from './Schedule';
 import { registerForPushNotificationsAsync } from './Register';
 
+/*
+* # 함수 수행 작업 요약
+*
+* 알림 채널 설정
+* 물리적 기기 확인
+* 푸시 알림 권한 요청 및 상태 확인
+* expo 푸시 토큰 가져오기
+* 토큰을 반환해 푸시 알림 보낼 준비
+*/
+
+
+// 알림 핸들러 설정
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: false,
-    shouldSetBadge: false,
+    
+    shouldShowAlert: true, // 알림 표시
+    shouldPlaySound: false, //소리 재생
+    shouldSetBadge: false, //배지 설정
   }),
 });
 
 export default function PushNotifi() {
   const [expoPushToken, setExpoPushToken] = useState('');
   const [notification, setNotification] = useState(false);
+
   const notificationListener = useRef();
   const responseListener = useRef();
 
   useEffect(() => {
+    // 푸시 알림 등록 후 토큰 전달
     registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
 
+    // 알림 수신 시 실행되는 리스너
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
       setNotification(notification);
     });
 
+    // 응답 처리 리스너 설정
     responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
       console.log(response);
     });
