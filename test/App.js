@@ -13,8 +13,8 @@ export default function App() {
         justifyContent: "space-around",
       }}
     >
-      <PushNotifi/>
-      {/* <TimePicker/> */}
+      {/* <PushNotifi/> */}
+      <TimePicker/>
     </View>
   );
 }
