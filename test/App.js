@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, onChange } from "react";
 import { Text, View, Button, Platform } from "react-native";
-import PushNotifi from "./src/PushNotifi";
 
+import PushNotifi from "./src/PushNotifi";
 import TimePicker from "./src/TimePicker";
 
 export default function App() {
@@ -13,7 +13,7 @@ export default function App() {
         justifyContent: "space-around",
       }}
     >
-      <PushNotifi />
+      {/* <PushNotifi /> */}
       <TimePicker/>
     </View>
   );
