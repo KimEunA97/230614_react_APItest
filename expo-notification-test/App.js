@@ -5,7 +5,6 @@ import PushNotifi from "./src/PushNotifi";
 import TimePicker from "./src/TimePicker";
 
 export default function App() {
-
   return (
     <View
       style={{
